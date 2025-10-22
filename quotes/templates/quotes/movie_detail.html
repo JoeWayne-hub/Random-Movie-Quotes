@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ movie.title }} - Quotes</title>
+</head>
+
+<body>
+    <h1>{{ movie.title }} ({{ movie.year }})</h1>
+    <img src="{{ movie.poster }}" alt="{{ movie.title }}" width="200">
+    <h2>Famous Quotes:</h2>
+
+    {% if quotes %}
+    <ul>
+        {% for quote in quotes %}
+        <li><strong>{{ quote.character }}:</strong> "{{ quote.text }}"</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No quotes found for this movie yet.</p>
+    {% endif %}
+    <a href="{% url 'movie_detail' movie.imdbID %}">
+</body>
+
+</html>

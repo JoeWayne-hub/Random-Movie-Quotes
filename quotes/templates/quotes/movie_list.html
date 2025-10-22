@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Movies</title>
+</head>
+
+<body>
+    </h1> Search Movies</h1>
+
+    <form method="get">
+        <input type="text" name="search" placeholder="Search movies..." value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    {% if movies %}
+    <ul>
+        {% for movie in movies %}
+        <li>
+            <a href="{% url 'movie_detail' movie.id %}">
+                <h3>{{ movie.title }} ({{ movie.year }})</h3>
+                <img src="{{ movie.poster }}" width="100">
+            </a>
+        </li>
+
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No movies found.</p>
+    {% endif %}
+</body>
+
+</html>

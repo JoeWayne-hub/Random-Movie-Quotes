@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Random Movie Quotes</title>
+</head>
+
+<body>
+    <h1>Random Movie Quotes</h1>
+    {% if random_quote %}
+    <h2>"{{ random_quote.text }}"</h2>
+    <p>— {{ random_quote.character }} ({{ random_quote.movie.title }})</p>
+    {% else %}
+    <p>No quotes available yet.</p>
+    {% endif %}
+
+    <a href="/movies/">See All Movies</a>
+</body>
+
+</html>
