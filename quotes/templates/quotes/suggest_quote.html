@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Suggest a Quote - {{ movie.Title }}</title>
+</head>
+
+<body>
+    <h1>Suggest a Quote for {{ movie.Title }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Suggestion</button>
+    </form>
+</body>
+
+</html>

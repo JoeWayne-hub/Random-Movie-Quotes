@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Movie Quotes{% endblock %}</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background-color: #000;
+            /* black background */
+            color: #f5c518;
+            /* gold text like IMDb/Netflix gold */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .movie-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-black text-[#f5c518] px-6 py-4 flex justify-between items-center shadow-md">
+        <a href="{% url 'home' %}" class="text-2xl font-bold tracking-wide">🎬 CineQuotes</a>
+        <div class="space-x-6">
+            <a href="{% url 'home' %}" class="hover:text-white">Home</a>
+            <a href="{% url 'add_quote' %}" class="hover:text-white">Add Quote</a>
+            <a href="{% url 'search_movies' %}" class="hover:text-white">Search Movies</a>
+            <a href="{% url 'search_quotes' %}" class="hover:text-white">Search Quotes</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-6 text-center border-t border-[#f5c518]">
+        <p class="text-sm">© {{ now|date:"Y" }} CineQuotes by Joseph. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

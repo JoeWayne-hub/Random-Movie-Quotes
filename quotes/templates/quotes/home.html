@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html>
+{% extends "quotes/base.html" %}
+{% block title %}Home - CineQuotes{% endblock %}
 
-<head>
-    <title>Random Movie Quotes</title>
-</head>
+{% block content %}
+<h1 class="text-3xl font-bold mb-6 text-[#f5c518]">🎞 Random Movie Quotes</h1>
 
-<body>
-    <h1>Random Movie Quotes</h1>
-    {% if random_quote %}
-    <h2>"{{ random_quote.text }}"</h2>
-    <p>— {{ random_quote.character }} ({{ random_quote.movie.title }})</p>
-    {% else %}
-    <p>No quotes available yet.</p>
-    {% endif %}
-
-    <a href="/movies/">See All Movies</a>
-</body>
-
-</html>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {% for quote in quotes %}
+    <div class="movie-card bg-zinc-900 rounded-xl p-4">
+        <h2 class="text-lg font-semibold text-white mb-2">{{ quote.movie_title }}</h2>
+        <p class="text-gray-300 italic mb-3">"{{ quote.quote_text }}"</p>
+        <p class="text-gray-500 text-sm">— {{ quote.character_name|default:"Unknown" }}</p>
+    </div>
+    {% empty %}
+    <p class="text-gray-400">No quotes available yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

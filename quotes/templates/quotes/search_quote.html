@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search Quotes</title>
+</head>
+
+<body>
+    <h1>Search Quotes</h1>
+    <form method="get">
+        <input type="text" name="q" placeholder="Search for a movie..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if movies_with_quotes %}
+    {% for movie in movies_with_quotes %}
+    <div style="border:1px solid #ccc; margin:15px; padding:15px;">
+        <img src="{{ movie.poster }}" alt="{{ movie.title }}" width="150">
+        <h2>{{ movie.title }} ({{ movie.year }})</h2>
+        <ul>
+            {% for quote in movie.quotes %}
+            <li><strong>{{ quote.character }}</strong>: "{{ quote.quote_text }}"</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No quotes found for "{{ query }}"</p>
+    {% endif %}
+</body>
+
+</html>

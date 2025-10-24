@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quote Submitted!</title>
+</head>
+
+<body>
+    <h2>Thank you!</h2>
+    <p>Your quote for "{{ movie.Title }}" has been submitted for review.</p>
+    <a href="{% url 'movie_detail' movie.imdbID %}">Back to Movie</a>
+</body>
+
+</html>

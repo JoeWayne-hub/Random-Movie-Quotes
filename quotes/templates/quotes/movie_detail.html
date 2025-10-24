@@ -2,24 +2,33 @@
 <html>
 
 <head>
-    <title>{{ movie.title }} - Quotes</title>
+    <title>{{ movie.Title }} - Quotes</title>
 </head>
 
 <body>
-    <h1>{{ movie.title }} ({{ movie.year }})</h1>
-    <img src="{{ movie.poster }}" alt="{{ movie.title }}" width="200">
-    <h2>Famous Quotes:</h2>
+    <h1>{{ movie.Title }} ({{ movie.Year }})</h1>
 
+    {% if movie.Poster and movie.Poster != "N/A" %}
+    <img src="{{ movie.Poster }}" alt="{{ movie.Title }}" width="200">
+    {% endif %}
+
+    <h2>Famous Quotes:</h2>
     {% if quotes %}
     <ul>
         {% for quote in quotes %}
-        <li><strong>{{ quote.character }}:</strong> "{{ quote.text }}"</li>
+        <li><strong>{{ quote.character|default:"Unknown" }}:</strong> "{{ quote.quote_text }}"</li>
         {% endfor %}
     </ul>
     {% else %}
     <p>No quotes found for this movie yet.</p>
     {% endif %}
-    <a href="{% url 'movie_detail' movie.imdbID %}">
+
+    <h3>Add a New Quote</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Quote</button>
+    </form>
 </body>
 
 </html>
