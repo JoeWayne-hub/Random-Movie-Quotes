@@ -1,34 +1,47 @@
-<!DOCTYPE html>
-<html>
+{% extends "quotes/base.html" %}
+{% block title %}{{ movie.Title }} - CineQuotes{% endblock %}
 
-<head>
-    <title>{{ movie.Title }} - Quotes</title>
-</head>
-
-<body>
-    <h1>{{ movie.Title }} ({{ movie.Year }})</h1>
-
+{% block content %}
+<div class="flex flex-col md:flex-row items-start gap-8">
+    <!-- 🎬 Movie Poster -->
     {% if movie.Poster and movie.Poster != "N/A" %}
-    <img src="{{ movie.Poster }}" alt="{{ movie.Title }}" width="200">
+    <img src="{{ movie.Poster }}" alt="{{ movie.Title }}" class="w-64 rounded-lg shadow-lg" />
     {% endif %}
 
-    <h2>Famous Quotes:</h2>
-    {% if quotes %}
-    <ul>
-        {% for quote in quotes %}
-        <li><strong>{{ quote.character|default:"Unknown" }}:</strong> "{{ quote.quote_text }}"</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No quotes found for this movie yet.</p>
-    {% endif %}
+    <!-- 📝 Movie Info + Quotes -->
+    <div>
+        <h1 class="text-4xl font-bold text-[#f5c518] mb-3">{{ movie.Title }}</h1>
+        <p class="text-gray-400 mb-2">{{ movie.Year }}</p>
 
-    <h3>Add a New Quote</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit Quote</button>
-    </form>
-</body>
+        <!-- 🔹 Quotes Section -->
+        <h2 class="text-2xl font-semibold text-[#f5c518] mt-6 mb-4">Famous Quotes</h2>
 
-</html>
+        {% if quotes %}
+        <div class="flex flex-col gap-4 mt-4">
+            {% for quote in quotes %}
+            <div
+                class="bg-zinc-900 rounded-xl p-5 shadow-md border-l-4 border-gray-700 hover:border-[#f5c518] transition">
+                <p class="text-gray-200 italic mb-2 text-lg leading-relaxed">
+                    "{{ quote.quote_text }}"
+                </p>
+                <p class="text-gray-500 text-sm text-right">— {{ quote.character|default:"Unknown" }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-gray-500 mt-4">No quotes found for this movie yet.</p>
+        {% endif %}
+
+        <!-- ✍️ Add New Quote Form -->
+        <h3 class="text-xl font-semibold text-[#f5c518] mt-10 mb-3">Add a New Quote</h3>
+        <form method="post" class="bg-zinc-900 p-6 rounded-lg space-y-3 shadow-md">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit"
+                class="bg-[#f5c518] text-black font-semibold px-4 py-2 rounded hover:bg-yellow-400 transition">
+                Submit Quote
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

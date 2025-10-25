@@ -10,3 +10,4 @@ urlpatterns = [
     path('suggest/<str:imdb_id>/', views.suggest_quote, name='suggest_quote'),
 
 ]
+

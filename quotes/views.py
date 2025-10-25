@@ -8,20 +8,36 @@ from .forms import MovieQuoteForm
 
 # Home Page - Shows random quotes
 def home(request):
-    quotes = list(MovieQuote.objects.filter(approved=True))
-    random_quote = random.choice(quotes) if quotes else None
+    # Get unique movies that have at least one quote
+    movies_with_quotes = MovieQuote.objects.values('movie_title', 'imdb_id').distinct()
 
-    movie = None
-    if random_quote:
-        api_key = "20aec232"
-        url = f"http://www.omdbapi.com/?i={random_quote.imdb_id}&apikey={api_key}"
+    # Prepare movie data list
+    movie_data = []
+    api_key = "20aec232"
+
+    for movie in movies_with_quotes:
+        imdb_id = movie['imdb_id']
+
+        # Fetch movie details from OMDb to get poster
+        url = f"http://www.omdbapi.com/?i={imdb_id}&apikey={api_key}"
         response = requests.get(url)
-        movie = response.json()
+        data = response.json()
 
-    return render(request, 'quotes/home.html', {
-        'random_quote': random_quote,
-        'movie': movie
-    })
+        # Get random quote for the movie
+        quotes = MovieQuote.objects.filter(movie_title=movie['movie_title'])
+        if quotes.exists():
+            random_quote = random.choice(list(quotes))
+            movie_data.append({
+                'movie_title': movie['movie_title'],
+                'imdb_id': imdb_id,
+                'poster': data.get('Poster', ''),
+                'year': data.get('Year', ''),
+                'quote_text': random_quote.quote_text,
+                'character': random_quote.character,
+            })
+
+    return render(request, 'quotes/home.html', {'movie_data': movie_data})
+
 
 
 # Movie List - Shows all movies
